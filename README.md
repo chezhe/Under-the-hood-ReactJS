@@ -33,6 +33,24 @@ The entire scheme is divided into 15 parts, let's get started.
 * [Part 14](./stack/book/Part-14.md)
 
 
+### 中文翻译
+
+* [简介](./stack/book-zh/Intro.md)
+* [Part 0](./stack/book-zh/Part-0.md)
+* [Part 1](./stack/book-zh/Part-1.md)
+* [Part 2](./stack/book-zh/Part-2.md)
+* [Part 3](./stack/book-zh/Part-3.md)
+* [Part 4](./stack/book-zh/Part-4.md)
+* [Part 5](./stack/book-zh/Part-5.md)
+* [Part 6](./stack/book-zh/Part-6.md)
+* [Part 7](./stack/book-zh/Part-7.md)
+* [Part 8](./stack/book-zh/Part-8.md)
+* [Part 9](./stack/book-zh/Part-9.md)
+* [Part 10](./stack/book-zh/Part-10.md)
+* [Part 11](./stack/book-zh/Part-11.md)
+* [Part 12](./stack/book-zh/Part-12.md)
+* [Part 13](./stack/book-zh/Part-13.md)
+* [Part 14](./stack/book-zh/Part-14.md)
 
 ## Fiber
 1. [Intro](./fiber/book/Intro.md) [TODO]

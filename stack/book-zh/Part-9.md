@@ -6,11 +6,11 @@
 
 ### But let’s move back..
 
-As you noticed on the scheme, the call of `setState` method, can be triggered in several ways, be more precise, with, or without, external impact (means ‘user action’). Let’s take two cases: in the first case, the method call is triggered by mouse click, and second, just call from `setTimeout` in `componentDidMount`.
+在图中, 可能有也可能没有外部的影响下 (也就是‘用户行为’)，有多种方式会触发`setState`方法. 来看两个例子: 第一个例子,方法调用由鼠标点击触发, 第二个, 通过在`componentDidMount`中`setTimeout`.
 
-What actually makes that difference? Well, as you remember, React process updates in `batches`, it means that list of updates should be somehow collected and, then, `flushed`. The thing is that when mouse event appears, it’s handled on the top level and then, through several layers of wrappers the batched update will be started. By the way, as you can see it happens only if `ReactEventListener` is `enabled` (1), and, if you remember, during a component mounting phase, one of `ReactReconcileTransaction` wrappers actually disables it, and make mounting safe. Smart enough! But, what about `setTimeout case`? It’s also simple, before putting a component into `dirtyComponents` list React will make sure that transaction is started (opened), so then, later, it should be closed and updates flushed.
+有什么区别吗? React通过`batches`的方式处理更新, 这表明列表里的更新总得收集起来，然后 `flushed`.当鼠标事件发生, 它是在上层被处理的, 通过几层封装器，批量更新才开始. 另外,只有当 `ReactEventListener` 是`enabled`状态 (1)才会发生, 而且当组件挂载时, `ReactReconcileTransaction` 封装器之一为了保证挂载的安全，是禁用它的.`setTimeout case`呢? 也很简单, 在把一个组件放进`dirtyComponents`列表之前，React会保证事务已经开始(opened状态), 之后, 它会被关闭和清除更新.
 
-As you know, React implements ‘syntetic events’, some ‘syntax sugar’ which in fact wraps native events. But then, later, they still try to behave how we all used to see events. You can see the comment in the code:
+React通过一些‘语法糖’封装原生事件的方式来实现‘合成事件’. 之后, 它们仍然表现为常见的事件. 上源码:
 > ‘To help development we can get better dev tool integration by simulating a real browser event’
 
 ```javascript
@@ -29,12 +29,12 @@ ReactErrorUtils.invokeGuardedCallback = function (name, func, a) {
       fakeNode.removeEventListener(evtType, boundFunc, false);
 };
 ```
-Alright, back to our update, let’s see one more time. The approach is:
+好吧, 回到更新的话题. 过程是这样的:
 
-1. call setState
-1. open batching transaction if it’s not opened yet
-1. add affected components to `dirtyComponents` list,
-1. close transaction with calling `ReactUpdates.flushBatchedUpdates`, what actually means ‘process whatever was collected into `dirtyComponents`’.
+1. 调用setState
+1. 如果批处理事务还没打开，打开它
+1. 把受影响的组件添加到`dirtyComponents`列表,
+1. 调用`ReactUpdates.flushBatchedUpdates`关闭事务, 实际就是‘处理所有`dirtyComponents`收集到的组件’.
 
 [![](https://rawgit.com/Bogdan-Lyashenko/Under-the-hood-ReactJS/master/stack/images/9/set-state-update-start.svg)](https://rawgit.com/Bogdan-Lyashenko/Under-the-hood-ReactJS/master/stack/images/9/set-state-update-start.svg)
 
