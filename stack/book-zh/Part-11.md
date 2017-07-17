@@ -4,16 +4,18 @@
 
 <em>11.0 Part 11 (clickable)</em>
 
-### Update component
+### 更新组建
 
-Comment in the code which describes the method says:
+代码注释如是形容这个方法:
 >‘Perform an update to a mounted component. The componentWillReceiveProps and shouldComponentUpdate methods are called, then (assuming the update isn't skipped) the remaining update lifecycle methods are called and the DOM representation is updated. By default, this implements React's rendering and reconciliation algorithm. Sophisticated clients may wish to override this.’
 
-Alright… sounds reasonable.
+>“对一个已挂载的组件执行更新”。componentWillReceiveProps 和 shouldComponentUpdate方法会被调用，然后（假设更新没有被跳过的话，可能是shouldComponentUpdate被返回false）剩下的更新生命周期方法会被调用，并且DOM的显示层更新。这默认是通过React的渲染和调和算法实现的，复杂的客户端可能会希望重写它。
 
-The first thing we check if `props` (1) were changed, technically, the method `updateComponent` can be called in two different scenarios if `setState` was called or `props` were changed. If `props` were actually changed, then life-cycle method `componentWillReceiveProps` will be called. After, React re-calculate `nextState` (2) based on `pending state queue` (queue of partial state objects which we set before, in our case queue will be like [{message: "click state message"}]). Of course, in the case with just `props` update state will be untouched.
+好吧… 听起来很合理.
 
-Well, next step, we set `shouldUpdate` to default value `true`(3). That’s actually why when `shouldComponentUpdate` is not specified, a component is updated by default. Then, check if it’s not `force update`. As you know, it’s possible to call `forceUpdate` from component to update it, instead of changing `state` or `props`, but, according to React official docs, using this method is bad practice. So, in a case of force update component will be updated permanently, otherwise, specified from the component method `shouldComponentUpdate` will be called, and `shouldUpdate` will be re-assigned with its result value. If it's determined that a component should not update, React still needs to set `props` and `state` but shortcut the rest of the update.
+第一件事，我们看看`props` (1) 是否变了, 技术上来说,如果`setState`被调用或者`props` 变了的话，`updateComponent`方法 在两种不同场景下会被调用. 如果`props`确实变了, 那么生命周期函数`componentWillReceiveProps`会被调用. 然后, React在`pending state queue`(我们之前设置的部分state对象的队列, 在我们的例子中，队列大体上是这样的 [{message: "click state message"}])的基础上重新计算`nextState` (2). 当然, 如果只有`props`更新的话，state不受影响.
+
+那么, 下一步, 我们设定`shouldUpdate` 默认返回`true`(3). 这也是为什么当`shouldComponentUpdate`没有被指定的话, 一个组件默认更新. 然后, 检查是否`force update`. 组件可能会从内部调用`forceUpdate`来更新, 而不是改变`state` 或 `props`, 但是, 根据React官方文档, 并不建议这么做. 所以, 强制更新总是会更新, 否则, 组件方法`shouldComponentUpdate`将会被调用, 并且 `shouldUpdate`会根据结果重新复制. If it's determined that a component should not update, React still needs to set `props` and `state` but shortcut the rest of the update.
 
 ### Alright, we’ve finished *Part 11*.
 
