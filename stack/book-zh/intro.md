@@ -5,7 +5,7 @@
 
 [![](../images/intro/all-page-stack-reconciler-25-scale.jpg)](../images/intro/all-page-stack-reconciler.svg)
 
-<em>Intro.0 All scheme (clickable)</em>
+<em>总览 (clickable)</em>
 
 所以... 看一下. 花点时间. 总体上看起来复杂些, 但事实上, 它只描述了两个过程: 挂载(mount) 和 更新(update). 我忽略卸载(unmount)，简化结构， 因为它看上去就像“逆挂载” . 而且, **这并不是百分之百** 代码, 而大部分是关于架构的. 总的来说, 大概有60%的代码, but the other 40% would bring little visual value. 所以，简而言之，我忽略了那部分.
 
